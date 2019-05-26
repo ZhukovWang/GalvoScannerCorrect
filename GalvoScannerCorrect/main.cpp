@@ -1,20 +1,50 @@
-﻿// GalvoScannerCorrect.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+// main.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
 #include <iostream>
+#include <fstream>
+#include <filesystem>
+#include "src/correct.h"
 
-int main()
+double origin_data[9][2] = { {-21000,21000},{-21000,0},{-21000,-21000},{0,21000}, {0,0},{0,-21000},{21000,21000},{21000,0},{21000,-21000} };
+
+int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!\n";
+    std::ofstream origin_file("output\\origin_data.txt");
+    std::ofstream conic_correction_file("output\\conic_correction_data.txt");
+    std::ofstream parallelogram_correction_file("output\\parallelogram_correction_data.txt");
+    std::ofstream trapezoidal_correction_file("output\\trapezoidal_correction_data.txt");
+    std::ofstream weighted_average_correction_file("output\\weighted_average_correction_data.txt");
+
+    double conic_correction[9][2] = { {0} };
+    double parallelogram_correction[9][2] = { {0} };
+    double trapezoidal_correction[9][2] = { {0} };
+    double weighted_average_correction[9][2] = { {0} };
+
+    for (int i = 0; i < 9; ++i)
+    {
+        origin_file << origin_data[i][0] << " " << origin_data[i][1] << "\n";
+
+        GetConicCorrection(origin_data[i][0], origin_data[i][1], &conic_correction[i][0], &conic_correction[i][1]);
+        conic_correction_file << origin_data[i][0] + conic_correction[i][0] << " " << origin_data[i][1] + conic_correction[i][1] << "\n";
+
+        GetParallelogramCorrection(origin_data[i][0], origin_data[i][1], &parallelogram_correction[i][0], &parallelogram_correction[i][1]);
+        parallelogram_correction_file << origin_data[i][0] + parallelogram_correction[i][0] << " " << origin_data[i][1] + parallelogram_correction[i][1] << "\n";
+
+        GetTrapezoidalCorrection(origin_data[i][0], origin_data[i][1], &trapezoidal_correction[i][0], &trapezoidal_correction[i][1]);
+        trapezoidal_correction_file << origin_data[i][0] + trapezoidal_correction[i][0] << " " << origin_data[i][1] + trapezoidal_correction[i][1] << "\n";
+
+        GetWeightedAverageCorrection(origin_data[i][0], origin_data[i][1], &weighted_average_correction[i][0], &weighted_average_correction[i][1]);
+        weighted_average_correction_file << origin_data[i][0] + weighted_average_correction[i][0] << " " << origin_data[i][1] + weighted_average_correction[i][1] << "\n";
+    }
+
+    origin_file.close();
+    conic_correction_file.close();
+    parallelogram_correction_file.close();
+    trapezoidal_correction_file.close();
+    weighted_average_correction_file.close();
+
+    std::cout << "Done." << std::endl;
+
+    return 0;
 }
-
-// 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
-// 调试程序: F5 或调试 >“开始调试”菜单
-
-// 入门使用技巧: 
-//   1. 使用解决方案资源管理器窗口添加/管理文件
-//   2. 使用团队资源管理器窗口连接到源代码管理
-//   3. 使用输出窗口查看生成输出和其他消息
-//   4. 使用错误列表窗口查看错误
-//   5. 转到“项目”>“添加新项”以创建新的代码文件，或转到“项目”>“添加现有项”以将现有代码文件添加到项目
-//   6. 将来，若要再次打开此项目，请转到“文件”>“打开”>“项目”并选择 .sln 文件
