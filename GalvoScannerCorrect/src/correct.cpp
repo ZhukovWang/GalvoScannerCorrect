@@ -120,21 +120,37 @@ void GetTrapezoidalCorrection(double x, double y, double* correct_delta_x, doubl
 
 void GetWeightedAverageCorrection(double x, double y, double* correct_delta_x, double* correct_delta_y)
 {
+    if (x < x_axis_plat_x_start)
+    {
+        x = x_axis_plat_x_start;
+    }
     if (x > x_axis_plat_x_start + x_axis_plat_x_interval * (x_axis_plat_x_num - 1))
     {
         x = x_axis_plat_x_start + x_axis_plat_x_interval * (x_axis_plat_x_num - 1);
     }
 
+    if (x < y_axis_plat_x_start)
+    {
+        x = y_axis_plat_x_start;
+    }
     if (x > y_axis_plat_x_start + y_axis_plat_x_interval * (y_axis_plat_x_num - 1))
     {
         x = y_axis_plat_x_start + y_axis_plat_x_interval * (y_axis_plat_x_num - 1);
     }
 
+    if (y < x_axis_plat_y_start)
+    {
+        y = x_axis_plat_y_start;
+    }
     if (y > x_axis_plat_y_start + x_axis_plat_y_interval * (x_axis_plat_y_num - 1))
     {
         y = x_axis_plat_y_start + x_axis_plat_y_interval * (x_axis_plat_y_num - 1);
     }
 
+    if (y < y_axis_plat_y_start)
+    {
+        y = y_axis_plat_y_start;
+    }
     if (y > y_axis_plat_y_start + y_axis_plat_y_interval * (y_axis_plat_y_num - 1))
     {
         y = y_axis_plat_y_start + y_axis_plat_y_interval * (y_axis_plat_y_num - 1);
