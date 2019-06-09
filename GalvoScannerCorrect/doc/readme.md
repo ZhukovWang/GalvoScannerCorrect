@@ -25,7 +25,7 @@
 
 类似于二次曲线补偿，做一个极端情况，如下图：
 
-![ParallelogramCorrection](\pic\ParallelogramCorrection.png)
+![ParallelogramCorrection](pic/ParallelogramCorrection.png)
 
 平行四边形的左上角的点已经偏移到了y轴上。此时根据几何关系即可得到偏差值，然后再乘一个误差系数即可。
 
